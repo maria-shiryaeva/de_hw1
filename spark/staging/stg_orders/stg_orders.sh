@@ -1,0 +1,14 @@
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+spark-submit \
+  --master spark://spark-master:7077 \
+  --name load-stg-orders \
+  --deploy-mode client \
+  --conf spark.executor.instances=1 \
+  --conf spark.executor.cores=1 \
+  --conf spark.executor.memory=1g \
+  --conf spark.driver.memory=1g \
+  --conf spark.dynamicAllocation.enabled=false \
+  --conf spark.sql.sources.partitionOverwriteMode=dynamic \
+  --packages org.postgresql:postgresql:42.7.3,org.apache.hadoop:hadoop-aws:3.3.4,io.delta:delta-spark_2.12:3.3.0 \
+  "$SCRIPT_DIR/stg_orders.py" "$@"

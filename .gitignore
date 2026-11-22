@@ -1,6 +1,8 @@
-target/
-dbt_packages/
-logs/
-.venv/
+checks.log
+*.log
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
 .DS_Store
-.user.yml
+Thumbs.db
